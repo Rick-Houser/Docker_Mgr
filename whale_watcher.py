@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import time
 from subprocess import Popen
 
 class WhaleWatcher:
@@ -8,6 +9,10 @@ class WhaleWatcher:
     def __init__(self):
         self.execution = sys.argv[1]
         self.command = sys.argv[2]
+        self.time_stamp = time.strftime("%Y%m%d-%H%M%S")
+        self.cont_name = self.command.split(' ')[0] + '_' + self.time_stamp
+        self.stdout = self.cont_name + '_out.log'
+        self.stderr = self.cont_name + '_err.log'
 
     def main(self):
         if len(sys.argv) > 2:
