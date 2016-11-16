@@ -1,13 +1,28 @@
 #!/usr/bin/env python
 
+import sys
+
 class WhaleWatcher:
     ''' A tool used to manage the execution of software in Docker containers '''
     def __init__(self):
+        self.execution = sys.argv[1]
+        self.command = sys.argv[2]
 
     def main(self):
+        if len(sys.argv) > 2:
+            exe = self.execution
+            if exe == '-r':
+                self.run()
+            elif exe == 'stop' or exe == 'kill':
+                self.stop()
+            else:
+                print "Unknown command. Available starting arguments: "'-c', 'stop' or 'kill'."
+        else:
+            print "Too few arguments. Please see the README for usage details."
 
     def run(self):
     ''' Runs a given command within a container '''
+        print "Creating container '%s' to run '%s'." % (self.cont_name, self.command)
 
     def stop(self):
     ''' Stops a container '''
