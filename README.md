@@ -1,4 +1,4 @@
-# Docker_Mgr
+# Whale_Watcher
 A rudimentary Python tool used to manage the execution of software within Docker containers on a single machine. This is done in an encapsulated manner, allowing multiple containers to be run simultaneously and independently. See ARCHITECTURE.md for my thoughts on tradeoffs when implementing this tool under a 3 hour time constraint.
 
 ## Requirements:
