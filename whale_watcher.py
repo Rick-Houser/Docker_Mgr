@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+from subprocess import Popen
 
 class WhaleWatcher:
     ''' A tool used to manage the execution of software in Docker containers '''
@@ -26,9 +27,12 @@ class WhaleWatcher:
 
     def stop(self):
     ''' Stops a container '''
+        print "You've chosen to '%s' container '%s'." % (self.execution, self.command)
+        Popen('sudo docker ' + self.execution + ' ' + self.command, shell=True).wait()
 
     def clean_up(self):
     ''' Remove exited containers '''
+        print "Cleaning up unused containers."
 
 if __name__ == '__main__':
     watcher = WhaleWatcher()
