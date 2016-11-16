@@ -29,10 +29,13 @@ class WhaleWatcher:
     ''' Stops a container '''
         print "You've chosen to '%s' container '%s'." % (self.execution, self.command)
         Popen('sudo docker ' + self.execution + ' ' + self.command, shell=True).wait()
+        self.clean_up()
 
     def clean_up(self):
     ''' Remove exited containers '''
         print "Cleaning up unused containers."
+        exited = "$(sudo docker ps -a -q)"
+        Popen("sudo docker rm " + exited, shell=True).wait()
 
 if __name__ == '__main__':
     watcher = WhaleWatcher()
