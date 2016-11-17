@@ -29,6 +29,10 @@ class WhaleWatcher:
     def run(self):
     ''' Runs a given command within a container '''
         print "Creating container '%s' to run '%s'." % (self.cont_name, self.command)
+        Popen('sudo docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' \
+            + self.command + ' && sudo docker logs ' + self.cont_name + ' > logs/'\
+            + self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
+        self.clean_up()
 
     def stop(self):
     ''' Stops a container '''
