@@ -17,3 +17,27 @@ A rudimentary Python tool used to manage the execution of software within Docker
 ```bash
 chmod +x <script_name>
 ```
+
+* Run some command inside a container
+
+```bash
+./script_name -r 'my command'
+  ```
+
+* To have more control over bash and run longer commands
+
+```bash
+./script_name -b 'my super long command with -options'
+```
+
+* To stop a specified container
+
+```bash
+./script_name stop 'container_name_or_id'
+```
+
+* To kill a container
+
+```bash
+./script_name kill 'container_name_or_id'
+```
