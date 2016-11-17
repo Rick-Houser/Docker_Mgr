@@ -25,6 +25,8 @@ class WhaleWatcher:
             exe = self.execution
             if exe == '-r':
                 self.run()
+            elif exe == '-b':
+                self.bash_mode()
             elif exe == 'stop' or exe == 'kill':
                 self.stop()
             else:
@@ -41,12 +43,12 @@ class WhaleWatcher:
             + self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
         self.clean_up()
 
-    def bash_mode(self, command):
+    def bash_mode(self):
         """ Allows full control over bash. """
         print "You've chosen bash mode. You have complete control over bash. "\
               "Use caution when using this method. Collecting logs with this "\
               "method is not done for you."
-        Popen(command, shell=True).wait()
+        Popen(self.command, shell=True).wait()
 
     def stop(self):
         ''' Stops a container '''
