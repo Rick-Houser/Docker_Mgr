@@ -59,9 +59,9 @@ class WhaleWatcher:
         self.clean_up()
 
     def clean_up(self):
-        ''' Remove exited containers '''
+        ''' Filter for and remove all containers with 'exited' status '''
         print "Cleaning up unused containers."
-        exited = "$(sudo docker ps -a -q)"
+        exited = "$(sudo docker ps --all -q -f status=exited)"
         Popen("sudo docker rm " + exited, shell=True).wait()
 
 if __name__ == '__main__':
