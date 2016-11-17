@@ -34,7 +34,7 @@ class WhaleWatcher:
             print "Too few arguments. Please see the README for usage details."
 
     def run(self):
-    ''' Runs a given command within a container '''
+        ''' Runs a given command within a container '''
         print "Creating container '%s' to run '%s'." % (self.cont_name, self.command)
         Popen('sudo docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' \
             + self.command + ' && sudo docker logs ' + self.cont_name + ' > logs/'\
@@ -49,13 +49,13 @@ class WhaleWatcher:
         Popen(command, shell=True).wait()
 
     def stop(self):
-    ''' Stops a container '''
+        ''' Stops a container '''
         print "You've chosen to '%s' container '%s'." % (self.execution, self.command)
         Popen('sudo docker ' + self.execution + ' ' + self.command, shell=True).wait()
         self.clean_up()
 
     def clean_up(self):
-    ''' Remove exited containers '''
+        ''' Remove exited containers '''
         print "Cleaning up unused containers."
         exited = "$(sudo docker ps -a -q)"
         Popen("sudo docker rm " + exited, shell=True).wait()
