@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import time
 from subprocess import Popen
@@ -15,6 +16,11 @@ class WhaleWatcher:
         self.stderr = self.cont_name + '_err.log'
 
     def main(self):
+        try:
+            os.mkdir("logs/")
+        except:
+            pass
+
         if len(sys.argv) > 2:
             exe = self.execution
             if exe == '-r':
@@ -22,7 +28,8 @@ class WhaleWatcher:
             elif exe == 'stop' or exe == 'kill':
                 self.stop()
             else:
-                print "Unknown command. Available starting arguments: "'-c', 'stop' or 'kill'."
+                print "Unknown command. Available starting arguments: '-b', "\
+                      "'-c', 'stop' or 'kill'."
         else:
             print "Too few arguments. Please see the README for usage details."
 
@@ -33,6 +40,13 @@ class WhaleWatcher:
             + self.command + ' && sudo docker logs ' + self.cont_name + ' > logs/'\
             + self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
         self.clean_up()
+
+    def bash_mode(self, command):
+        """ Allows full control over bash. """
+        print "You've chosen bash mode. You have complete control over bash. "\
+              "Use caution when using this method. Collecting logs with this "\
+              "method is not done for you."
+        Popen(command, shell=True).wait()
 
     def stop(self):
     ''' Stops a container '''
