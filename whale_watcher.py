@@ -3,6 +3,7 @@
 import os
 import sys
 import time
+import eerno
 from subprocess import Popen
 
 class WhaleWatcher:
@@ -18,8 +19,9 @@ class WhaleWatcher:
     def main(self):
         try:
             os.mkdir("logs/")
-        except:
-            pass
+        except IOError as exception:
+            if exception.errno != errno.EEXIST:
+                raise
 
         if len(sys.argv) > 2:
             exe = self.execution
