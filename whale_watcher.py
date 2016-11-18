@@ -25,7 +25,7 @@ class WhaleWatcher:
 
         if len(sys.argv) > 2: # separate class to parse args first.
             exe = self.execution
-            if exe == '-r':
+            if exe == '-r': # Add try and except and finally before
                 self.run()
             elif exe == '-b':
                 self.bash_mode()
@@ -66,5 +66,9 @@ class WhaleWatcher:
 
 if __name__ == '__main__':
     watcher = WhaleWatcher()
-    watcher.main()
-    watcher.clean_up()
+    try:
+        watcher.main()
+    except CalledProcessError as e:
+        print e.output
+    finally:
+        watcher.clean_up()
