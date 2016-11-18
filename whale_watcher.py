@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import eerno
-from subprocess import Popen
+from subprocess import Popen, CalledProcessError
 
 class WhaleWatcher:
     ''' A tool used to manage the execution of software in Docker containers '''
@@ -43,7 +43,6 @@ class WhaleWatcher:
         Popen('sudo docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' \
             + self.command + ' && sudo docker logs ' + self.cont_name + ' > logs/'\
             + self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
-        self.clean_up()
 
     def bash_mode(self):
         """ Allows full control over bash. """
@@ -56,7 +55,6 @@ class WhaleWatcher:
         ''' Stops a container '''
         print "You've chosen to '%s' container '%s'." % (self.execution, self.command)
         Popen('sudo docker ' + self.execution + ' ' + self.command, shell=True).wait()
-        self.clean_up()
 
     def clean_up(self):
         ''' Filter for and remove all containers with 'exited' status '''
