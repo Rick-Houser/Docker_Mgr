@@ -23,9 +23,9 @@ class WhaleWatcher:
             if exception.errno != errno.EEXIST:
                 raise
 
-        if len(sys.argv) > 2: # separate class to parse args first.
+        if len(sys.argv) > 2:
             exe = self.execution
-            if exe == '-r': # Add try and except and finally before
+            if exe == '-r':
                 self.run()
             elif exe == '-b':
                 self.bash_mode()
@@ -37,7 +37,7 @@ class WhaleWatcher:
         else:
             print "Too few arguments. Please see the README for usage details."
 
-    def run(self): # docker-py
+    def run(self):
         ''' Runs a given command within a container '''
         print "Creating container '%s' to run '%s'." % (self.cont_name, self.command)
         Popen('sudo docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' \
