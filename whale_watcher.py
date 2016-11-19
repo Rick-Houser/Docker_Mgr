@@ -4,7 +4,7 @@ import os
 import sys
 import time
 import eerno
-from subprocess import Popen, CalledProcessError
+from subprocess import Popen, CalledProcessError, check_output
 
 class WhaleWatcher:
     ''' A tool used to manage the execution of software in Docker containers '''
@@ -65,8 +65,8 @@ class WhaleWatcher:
 if __name__ == '__main__':
     watcher = WhaleWatcher()
     try:
-        watcher.main()
-    except CalledProcessError as e:
-        print e.output
+        check_output(watcher.main())
+    except CalledProcessError, ValueError, OSError as exception:
+        print exception.output
     finally:
         watcher.clean_up()
