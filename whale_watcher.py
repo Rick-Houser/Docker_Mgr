@@ -22,7 +22,7 @@ class WhaleWatcher:
         try:
             os.mkdir("logs/")
         except IOError as exception:
-            if exception.errno != errno.EEXIST:
+            if exception.errno != errno.EEXIST: # Do nothing if folder exists
                 raise
 
         if len(sys.argv) > 2:
@@ -35,9 +35,9 @@ class WhaleWatcher:
                 self.stop()
             else:
                 print "Unknown command. Available starting arguments: '-b', "\
-                      "'-c', 'stop' or 'kill'."
+                      "'-c', 'stop' or 'kill'.  "
         else:
-            print "Too few arguments. Please see the README for usage details."
+            print "Too few arguments, See the README for usage details.  "
 
     def run(self):
         ''' Runs a given command within a container '''
@@ -50,7 +50,7 @@ class WhaleWatcher:
         """ Allows full control over bash. """
         print "You've chosen bash mode. You have complete control over bash. "\
               "Use caution when using this method. Collecting logs with this "\
-              "method is not done for you."
+              "method is not done for you.  "
         Popen(self.command, shell=True).wait()
 
     def stop(self):
@@ -61,7 +61,7 @@ class WhaleWatcher:
 
     def clean_up(self):
         ''' Filter for and remove all containers with 'exited' status '''
-        print "Cleaning up unused containers."
+        print "Cleaning up unused containers.  "
         exited = "$(docker ps --all -q -f status=exited)"
         Popen("docker rm " + exited, shell=True).wait()
 
