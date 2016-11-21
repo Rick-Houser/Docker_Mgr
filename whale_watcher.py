@@ -6,8 +6,10 @@ import time
 import eerno
 from subprocess import Popen, CalledProcessError, check_output
 
+
 class WhaleWatcher:
-    ''' A tool used to manage the execution of software in Docker containers '''
+
+    ''' A tool that manages the execution of software in Docker containers '''
     def __init__(self):
         self.execution = sys.argv[1]
         self.command = sys.argv[2]
@@ -39,10 +41,10 @@ class WhaleWatcher:
 
     def run(self):
         ''' Runs a given command within a container '''
-        print "Creating container '%s' to run '%s'." % (self.cont_name, self.command)
-        Popen('sudo docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' \
-            + self.command + ' && sudo docker logs ' + self.cont_name + ' > logs/'\
-            + self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
+        print "Container '%s' will run '%s'." % (self.cont_name, self.command)
+        Popen('docker run -t -d --name ' + self.cont_name + ' ubuntu /bin/' +
+              self.command + ' && docker logs ' + self.cont_name + ' > logs/' +
+              self.stdout + ' 2> logs/' + self.stderr, shell=True).wait()
 
     def bash_mode(self):
         """ Allows full control over bash. """
@@ -53,14 +55,15 @@ class WhaleWatcher:
 
     def stop(self):
         ''' Stops a container '''
-        print "You've chosen to '%s' container '%s'." % (self.execution, self.command)
-        Popen('sudo docker ' + self.execution + ' ' + self.command, shell=True).wait()
+        print "Will '%s' container '%s'." % (self.execution, self.command)
+        Popen('docker ' + self.execution + ' ' +
+              self.command, shell=True).wait()
 
     def clean_up(self):
         ''' Filter for and remove all containers with 'exited' status '''
         print "Cleaning up unused containers."
-        exited = "$(sudo docker ps --all -q -f status=exited)"
-        Popen("sudo docker rm " + exited, shell=True).wait()
+        exited = "$(docker ps --all -q -f status=exited)"
+        Popen("docker rm " + exited, shell=True).wait()
 
 if __name__ == '__main__':
     watcher = WhaleWatcher()
